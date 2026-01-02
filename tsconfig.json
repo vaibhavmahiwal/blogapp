@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* Base Options */
+    "target": "ES2022",                // The version of JS output (modern Node supports ES2022)
+    "module": "NodeNext",              // Required for modern ESM logic in Node
+    "moduleResolution": "NodeNext",    // Ensures TS finds modules correctly
+    "rootDir": "./src",                // Where your source code lives
+    "outDir": "./dist",                // Where the compiled JS goes
+    
+    /* Strictness - Critical for "Showcase" quality */
+    "strict": true,                    // Enables all strict type-checking options
+    "noImplicitAny": true,             // Disallows variables that don't have a defined type
+    "strictNullChecks": true,          // Prevents "cannot read property of undefined" errors
+    
+    /* Integration */
+    "esModuleInterop": true,           // Allows you to import CommonJS modules easily
+    "skipLibCheck": true,              // Speeds up compilation by skipping declaration files
+    "forceConsistentCasingInFileNames": true,
+    
+    /* Development */
+    "sourceMap": true,                 // Helps with debugging in VS Code
+    "removeComments": true             // Keeps the output production code clean
+  },
+  "include": ["src/**/*"],             // Only compile files in the src folder
+  "exclude": ["node_modules", "**/*.test.ts"] // Ignore dependencies and test files
+}
