@@ -29,27 +29,51 @@ export async function createBlog(req: AuthRequest, res: Response) {
 }
 
 //list Blogs
-export async function listBlogs(req:AuthRequest,res:Response){
-     try{
-        const blogs=await Blog.find()
-         .populate("author","name email")
-         .sort({createdAt:-1});
-         return res.json(blogs);
-     }catch(error){
-        return res.status(500).json({message:"failed to list blogs"});
-     }
+export async function listBlogs(req: AuthRequest, res: Response) {
+  try {
+    const cacheKey = "blogs:all";
+
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      return res.json(JSON.parse(cached));
+    }
+
+    const blogs = await Blog.find()
+      .populate("author", "name email")
+      .sort({ createdAt: -1 });
+
+    await redis.setex(cacheKey, 60, JSON.stringify(blogs)); // cache 60 sec
+    return res.json(blogs);
+
+  } catch (error) {
+    return res.status(500).json({ message: "failed to list blogs" });
+  }
 }
 
 //function to get blog by id
-export async function getBlog(req:AuthRequest,res:Response){
-      try{
-          const {id}=req.params as {id:string};
-          const blog=await Blog.findById(id).populate("author","name,email");
-          if(!blog)return res.status(404).json({message:"Not found"});
-          return res.json(blog);
-      }catch(error){
-          return res.status(500).json({message:"Failed to get blog"});
-      }
+export async function getBlog(req: AuthRequest, res: Response) {
+  try {
+    const { id } = req.params as { id: string };
+    const cacheKey = `blog:${id}`;
+
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      return res.json(JSON.parse(cached));
+    }
+
+    const blog = await Blog.findById(id)
+      .populate("author", "name email");
+
+    if (!blog) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    await redis.setex(cacheKey, 60, JSON.stringify(blog));
+    return res.json(blog);
+
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to get blog" });
+  }
 }
 
 //update a blog

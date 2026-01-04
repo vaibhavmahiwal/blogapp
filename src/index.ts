@@ -7,6 +7,8 @@ import { connectDB } from "./config/database.js";
 import cors from "cors";
 import morgan from "morgan";
 import blogRoutes from "./routes/blogRoutes.js"
+import "./config/redis.js";
+
 dotenv.config();
 
 const app = express();
