@@ -8,8 +8,9 @@ export const connectDB=async():Promise<void>=>{
         );
        }
        await mongoose.connect(mongoURI);
-       process.on("SIGINT",async()=>{
-        await mongoose.connection.close();
+
+       process.on("SIGINT",async()=>{    //handle ctrl+c shutdown
+        await mongoose.connection.close();  
         process.exit(0);
        })
     }catch(error){

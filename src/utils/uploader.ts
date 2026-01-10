@@ -20,30 +20,16 @@ const storage = multer.diskStorage({
     cb(null, uploadsDir);
   },
   filename: (_req, file, cb) => {
-    const uniqueName =
-      Date.now() + "-" + Math.round(Math.random() * 1e9);
-
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = path.extname(file.originalname);
     cb(null, `${uniqueName}${ext}`);
   },
 });
 
-function imageFileFilter(
-  _req: any,
-  file: Express.Multer.File,
-  cb: multer.FileFilterCallback
-) {
-  if (/^image\//.test(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image uploads are allowed!"));
-  }
-}
-
+// ✅ Simplified Multer config (Removed fileFilter to allow all types)
 export const upload = multer({
   storage,
-  fileFilter: imageFileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 }, // Increased to 10MB for general files
 });
 
 export default upload;

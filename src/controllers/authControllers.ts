@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User.js';
 
-
+   
  //register a new user
  export async function register(req:Request,res:Response){
     try{
@@ -72,3 +72,4 @@ import { User } from '../models/User.js';
       }
   }
 export default {register,login};
+

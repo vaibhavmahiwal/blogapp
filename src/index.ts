@@ -1,53 +1,51 @@
+import "dotenv/config";
 import express from "express";
-import dotenv from "dotenv";
-import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./config/swagger.js";
-import authRoutes from "./routes/authRoutes.js";
-import { connectDB } from "./config/database.js";
+
 import cors from "cors";
 import morgan from "morgan";
-import blogRoutes from "./routes/blogRoutes.js"
+import path from "path";
+import authRoutes from "./routes/authRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+import { connectDB } from "./config/database.js";
 import "./config/redis.js";
 
-dotenv.config();
+
 
 const app = express();
-app.use(express.json());
+const port = process.env.PORT || 3000;
+app.use(express.json()); // Parses JSON
+app.use(express.urlencoded({ extended: true })); // Parses form-data text fields
+
+// 1. GLOBAL MIDDLEWARE (Must come before routes)
+app.use(cors());
 app.use(morgan("dev"));
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// 2. STATIC FOLDER (So you can view your uploaded images)
+// This makes http://localhost:3000/uploads/your-image.jpg work
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-const port = process.env.PORT || 3000;
-
-// Swagger documentation
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// Routes
+// 3. ROUTES
 app.use("/api/auth", authRoutes);
-app.use("/api/blogs",blogRoutes);
+app.use("/api/blogs", blogRoutes);
 
-// Root route
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+// 4. ERROR HANDLING (Must be at the very bottom)
+app.use((err: any, req: any, res: any, next: any) => {
+  console.error("🔥 Global Error Handler:", err.message);
+  res.status(err.status || 500).json({ 
+    message: err.message || "Internal Server Error",
+    error: err 
+  });
 });
 
-// Start server
+// 5. START SERVER & DB
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-// Database connection
 connectDB()
   .then(() => console.log("Database connected successfully"))
-  .catch((err) => {
-    console.error("Database connection failed:", err);
-  });
-
+  .catch((err) => console.error("Database connection failed:", err));

@@ -9,10 +9,11 @@ export function requireAuth(
   req: AuthRequest,
   res: Response,
   next: NextFunction
+  
 ) {
   try {
     const header = req.headers.authorization;
-
+console.log("Authorization Header:", req.headers.authorization);
     // 1. Check if header exists and starts with Bearer
     if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({ message: "Unauthorized" });
