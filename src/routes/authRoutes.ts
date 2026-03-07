@@ -3,7 +3,7 @@ import { register, login } from "../controllers/authControllers.js";
 
 const router=Router();
 
-router.post("/register",register);
+
 router.post("/login",login);
 
 /**
@@ -40,6 +40,7 @@ router.post("/login",login);
  *       500:
  *         description: Internal server error
  */
+router.post("/register",register);
   
 /**
  * @swagger
