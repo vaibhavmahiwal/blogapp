@@ -9,14 +9,14 @@
 
   <br/>
 
-  <h1>✍️ Full-Stack Blog API</h1>
+  <h1>✍️ Blog API</h1>
   <p><b>A high-performance, secure, and scalable blogging backend engine.</b></p>
 
   <p>
     <a href="#-key-features">Key Features</a> •
     <a href="#-tech-stack">Tech Stack</a> •
     <a href="#-api-documentation">API Docs</a> •
-    <a href="#-installation">Setup</a>
+    <a href="#-installation--setup">Setup</a>
   </p>
 </div>
 
@@ -24,10 +24,10 @@
 
 ## 🚀 Key Features
 
-* **⚡ High-Speed Caching:** Implemented **Redis** for read-heavy endpoints, reducing database load and improving response times.
-* **🖼️ Managed Uploads:** Integrated **Cloudinary** for professional-grade image storage and delivery.
-* **🔐 Secure Auth:** Custom **JWT Authentication** middleware with protected routes.
-* **🔗 Relational Modeling:** Complex Mongoose schemas using **Virtual Populates** for seamless Blog-to-Comment relationships.
+* **⚡ High-Speed Caching:** Implemented **Redis** for read-heavy endpoints, reducing database load and improving latency.
+* **🖼️ Managed Uploads:** Integrated **Cloudinary** for automated cloud image storage and optimized delivery.
+* **🔐 Secure Auth:** Custom **JWT Authentication** middleware for protected resource access.
+* **🔗 Relational Modeling:** Utilizes Mongoose **Virtual Populates** for optimized Blog-to-Comment relationships.
 * **📖 Live Documentation:** Fully interactive API playground powered by **Swagger UI**.
 
 ---
@@ -47,8 +47,6 @@
 ---
 
 ## 🔗 API Documentation
-
-
 
 <details>
 <summary><b>🔐 Authentication Endpoints</b></summary>
@@ -90,9 +88,9 @@
 
 ```text
 src/
-├── config/         # Redis, Cloudinary, & Database setups
+├── config/         # Redis, Cloudinary, & Database configurations
 ├── controllers/    # Request handling & Business logic
-├── middleware/     # JWT Auth & Error Handling
-├── models/         # Mongoose schemas (Blog, User, Comment)
-├── routes/         # Express route definitions
+├── middleware/     # JWT Auth & Security filters
+├── models/         # Mongoose schemas & TypeScript interfaces
+├── routes/         # Express endpoint definitions
 └── index.ts        # Server entry point
