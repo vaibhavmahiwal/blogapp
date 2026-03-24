@@ -9,7 +9,7 @@
 
   <br/>
 
-  <h1>✍️ Blog API</h1>
+  <h1>Blog API</h1>
   <p><b>A high-performance, secure, and scalable blogging backend engine.</b></p>
 
   <p>
