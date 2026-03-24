@@ -32,8 +32,7 @@
 | Database         | MongoDB with Mongoose   |
 | Caching          | Redis                   |
 | Image Storage    | Cloudinary              |
-| API Docs         | Swagger UI              |
-| Containerization | Docker                  |
+| API Docs         | Swagger UI              |            |
 
 ---
 
@@ -100,7 +99,7 @@ src/
 ### Steps
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/blog-api.git
+git clone https://github.com/vaibhavmahiwal/blogapp.git
 cd blog-api
 
 # 2. Install dependencies
