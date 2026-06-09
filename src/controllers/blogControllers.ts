@@ -23,8 +23,18 @@ export const createBlog = async (req, res) => {
 
         res.status(201).json(newBlog);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+    // 1. Log the full error to our terminal so we can debug it
+    console.error("Error creating blog:", error);
+
+    // 2. Handle Mongoose Validation Errors (e.g., title too short, missing fields)
+    if (error.name === "ValidationError") {
+        return res.status(400).json({ message: error.message });
     }
+
+    // 3. General Server Error (Cloudinary timeout, DB down, etc.)
+    // We send a clear, safe message to the user
+    res.status(500).json({ message: "An internal server error occurred while creating the blog" });
+}
 };
 //list Blogs
 export async function listBlogs(req: AuthRequest, res: Response) {
