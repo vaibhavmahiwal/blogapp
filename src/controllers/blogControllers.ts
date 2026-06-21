@@ -108,7 +108,6 @@ export async function updateBlog(req:AuthRequest,res:Response){
      }
 }
 
-
 //toggle like function to count the like on a blog
 export async function toggleLike(req: AuthRequest, res: Response) {
   try {
